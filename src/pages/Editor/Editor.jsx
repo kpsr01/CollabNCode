@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import './Editor.css'
 import Connected from '../../components/Connected';
 
+
 function Editor() {
   const [connectedlist,setconnectedlist] =useState([
     {userID: 1, userName: 'iStyle'},
@@ -25,7 +26,7 @@ function Editor() {
               ))}
             </div>
             <div className="btns">
-              <h5>Room ID: ABCDEFG <span><button className='copy'><i>Copy</i></button></span></h5>
+              <button className='copy'>Room ID: ABCDEFG</button>
               <button className='leave'>Leave Room</button>
             </div>
           </div>
