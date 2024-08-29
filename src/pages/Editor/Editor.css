@@ -4,12 +4,6 @@
   height: 100vh;
 }
 
-.editor
-{
-  background-color: #393E46;
-  width: 100%;
-}
-
 .logo
 {
   text-align: center;
@@ -20,6 +14,7 @@
   height: 100vh;
   width: 13%;
   padding: 0px 15px;
+  border-right: 1px solid #393E46;
 }
 
 .connectedlist
@@ -37,7 +32,8 @@
   border: none;
   color: #EEEEEE;
   margin: 0;
-  padding: 0;
+  font-weight: 700;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
@@ -48,7 +44,8 @@
   border: none;
   border-radius: 7px;
   background-color: #00ADB5;
-  color: #040D12;
+  color: #222831;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -65,4 +62,69 @@
 {
   display: flex;
   flex-direction: column;
+}
+
+.editor
+{
+  background-color: #393E46;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 0.7fr;
+}
+
+.typecode
+{
+  border-right: 1px solid #EEEEEE;
+}
+
+.input-output
+{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-content: center;
+}
+
+.header
+{
+  background-color: #222831; 
+  padding: 20px;
+}
+
+.editor-header
+{
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor-header p
+{
+  margin: 0;
+}
+
+.input-p,.output-p
+{
+  margin: 2.5px 0px 2.5px 0px;
+}
+
+.editor-header-comps input
+{
+  margin: 0;
+  padding: 0;
+}
+
+.editor-header-comps
+{
+  display: flex;
+  gap: 20px;
+}
+
+.runcode
+{
+  padding: 5px 20px;
+  border: none;
+  border-radius: 7px;
+  background-color: #00ADB5;
+  color: #222831;
+  font-weight: 700;
+  cursor: pointer;
 }
