@@ -1,0 +1,68 @@
+.editorpage
+{
+  display: flex;
+  height: 100vh;
+}
+
+.editor
+{
+  background-color: #393E46;
+  width: 100%;
+}
+
+.logo
+{
+  text-align: center;
+}
+
+.sidebar
+{
+  height: 100vh;
+  width: 13%;
+  padding: 0px 15px;
+}
+
+.connectedlist
+{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.copy
+{
+  background-color: #222831;
+  border: none;
+  color: #EEEEEE;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.leave
+{
+  margin-top: 20px;
+  padding: 5px 25px;
+  border: none;
+  border-radius: 7px;
+  background-color: #00ADB5;
+  color: #040D12;
+  cursor: pointer;
+}
+
+.sidebarcomps
+{
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btns
+{
+  display: flex;
+  flex-direction: column;
+}

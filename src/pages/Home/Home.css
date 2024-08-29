@@ -1,6 +1,7 @@
 body
 {
   color: #EEEEEE;
+  background-color: #222831;
 }
 
 .homepage
@@ -54,7 +55,7 @@ h4
   justify-content: center;
 }
 
-button
+.btn button
 {
   margin-top: 7px;
   padding: 5px 25px;
