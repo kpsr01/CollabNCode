@@ -1,9 +1,5 @@
-/* Editor.css */
-
-/* General Styles */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
 }
 
 .editorpage {
@@ -139,7 +135,7 @@ body {
   border-radius: 7px;
 }
 
-input:focus, textarea:focus,select:focus {
+input:focus, textarea:focus, select:focus {
   border: none !important;
   outline: none !important;
 }
@@ -156,6 +152,9 @@ textarea {
   overflow: auto; 
   border: none;
   background-color: #393E46;
+  caret-color: #EEEEEE;
+  font-size: 18px;
+  color: #EEEEEE;
 }
 
 .input textarea {
@@ -164,4 +163,17 @@ textarea {
 
 .output textarea {
   height: 100%;
+}
+
+.loader-container
+{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

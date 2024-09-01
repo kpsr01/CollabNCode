@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import './Editor.css'
 import Connected from '../../components/Connected';
 import { Editor } from '@monaco-editor/react';
+import { BounceLoader } from 'react-spinners';
 
 
 function Editorpage() {
@@ -19,9 +20,62 @@ function Editorpage() {
   const [language,setlanguage]=useState('c');
   const [input,setinput]=useState('');
   const [output,setoutput]=useState('');
+  const [defaultcode,setdefaultcode]=useState(`// Default C code
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\\n");
+    return 0;
+}`);
+  const [showloader,setshowloader]=useState(false)
   const onlangchange=(e)=>
   {
     setlanguage(e.target.value);
+    changedefaultcode(e);
+  }
+  const changedefaultcode =(e)=>
+  {
+    const lang=e.target.value;
+    if(lang==='c')
+    {
+      setdefaultcode(`// Default C code
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\\n");
+    return 0;
+}`)
+    }
+    else if(lang==='cpp')
+    {
+      setdefaultcode(`// Default C++ code
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl;
+    return 0;
+}`)
+    }
+    else if(lang==='java')
+    {
+      setdefaultcode(`// Default Java code
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`)
+    }
+    else if(lang==='python')
+    {
+      setdefaultcode(`# Default Python code
+print("Hello, World!")`)
+    }
+    else if(lang==='javascript')
+    {
+      setdefaultcode(`// Default JavaScript code
+console.log("Hello, World!");`)
+    }
   }
   return (
     <div className='editorpage'>
@@ -66,6 +120,7 @@ function Editorpage() {
             height={'100%'}
             language={language}
             options={editoroptions}
+            value={defaultcode}
             theme='vs-dark'
           />
         </div>
@@ -88,6 +143,14 @@ function Editorpage() {
           </div>
         </div>
       </div>
+      {showloader&&<div className="loader-container">
+        <div className="loader">
+            <BounceLoader 
+              color="#00ADB5"
+              size={100}
+            />
+        </div>
+      </div>}
     </div>
   )
 }
