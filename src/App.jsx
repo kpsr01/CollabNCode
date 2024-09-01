@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter,Routes, Route} from 'react-router-dom'
 import Home from './pages/Home/Home'
-import Editor from './pages/Editor/Editor'
+import Editorpage from './pages/Editor/Editorpage'
 
 function CollabNCode() {
   return (
@@ -10,7 +10,7 @@ function CollabNCode() {
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/editor' element={<Home />}></Route>
-          <Route path='/editor/:roomid' element={<Editor />}></Route>
+          <Route path='/editor/:roomid' element={<Editorpage />}></Route>
         </Routes>
       </BrowserRouter>
     </>

@@ -1,15 +1,28 @@
 import React, {useState} from 'react'
 import './Editor.css'
 import Connected from '../../components/Connected';
+import { Editor } from '@monaco-editor/react';
 
 
-function Editor() {
+function Editorpage() {
   const [connectedlist,setconnectedlist] =useState([
     {userID: 1, userName: 'iStyle'},
     {userID: 2, userName: 'iPavan'},
     {userID: 3, userName: 'iBro'},
     {userID: 4, userName: 'iPawn'},
   ]);
+  const editoroptions=
+  {
+    fontSize:18,
+    wordWrap: 'on',
+  }
+  const [language,setlanguage]=useState('c');
+  const [input,setinput]=useState('');
+  const [output,setoutput]=useState('');
+  const onlangchange=(e)=>
+  {
+    setlanguage(e.target.value);
+  }
   return (
     <div className='editorpage'>
       <div className="sidebar">
@@ -36,23 +49,41 @@ function Editor() {
         <div className="typecode">
           <div className="header editor-header">
             <div className="editorname">
-              <p>Type Code Here</p>
+              <p>Code Editor</p>
             </div>
             <div className="editor-header-comps">
-              <input type="text" placeholder='Choose Language' />
+            <select name="language" id="code-language" onChange={onlangchange}>
+              <option value="c">C</option>
+              <option value="cpp">C++</option>
+              <option value="python">Python</option>
+              <option value="javascript">Javascript</option>
+              <option value="java">Java</option>
+            </select>
               <button className='runcode'>Run Code</button>
             </div>
           </div>
+          <Editor className='editorcomp'
+            height={'100%'}
+            language={language}
+            options={editoroptions}
+            theme='vs-dark'
+          />
         </div>
         <div className="input-output">
           <div className="input">
             <div className="header input-header">
               <p className='input-p'>Input</p>
             </div>
+            <div className="input-contents">
+              <textarea value={input} onChange={(e)=>setinput(e.target.value)}></textarea>
+            </div>
           </div>
           <div className="output">
             <div className="header output-header">
               <p className='output-p'>Output</p>
+            </div>
+            <div className="output-contents">
+              <textarea readOnly value={output} onChange={(e)=>setoutput(e.target.value)}></textarea>
             </div>
           </div>
         </div>
@@ -61,4 +92,4 @@ function Editor() {
   )
 }
 
-export default Editor
+export default Editorpage

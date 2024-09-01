@@ -1,24 +1,28 @@
-.editorpage
-{
+/* Editor.css */
+
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.editorpage {
   display: flex;
   height: 100vh;
 }
 
-.logo
-{
+.logo {
   text-align: center;
 }
 
-.sidebar
-{
+.sidebar {
   height: 100vh;
   width: 13%;
   padding: 0px 15px;
   border-right: 1px solid #393E46;
 }
 
-.connectedlist
-{
+.connectedlist {
   display: flex;
   align-items: center;
   gap: 7px;
@@ -26,8 +30,7 @@
   margin-top: 20px;
 }
 
-.copy
-{
+.copy {
   background-color: #222831;
   border: none;
   color: #EEEEEE;
@@ -37,8 +40,7 @@
   cursor: pointer;
 }
 
-.leave
-{
+.leave {
   margin-top: 20px;
   padding: 5px 25px;
   border: none;
@@ -49,8 +51,7 @@
   cursor: pointer;
 }
 
-.sidebarcomps
-{
+.sidebarcomps {
   display: flex;
   flex-direction: column;
   height: 80vh;
@@ -58,68 +59,70 @@
   align-items: center;
 }
 
-.btns
-{
+.btns {
   display: flex;
   flex-direction: column;
 }
 
-.editor
-{
+.editor {
   background-color: #393E46;
-  width: 100%;
+  width: 87%;
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 0.7fr;
 }
 
-.typecode
-{
+.typecode {
   border-right: 1px solid #EEEEEE;
+  height: 100%;
+  overflow: hidden;
 }
 
-.input-output
-{
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  align-content: center;
+.editorcomp {
+  height: calc(100% - 60px); 
+  padding: 0;
+  margin: 0;
 }
 
-.header
-{
-  background-color: #222831; 
+.input-output {
+  display: flex;
+  flex-direction: column;
+}
+
+.input, .output {
+  flex: 1;
+  overflow: hidden;
+}
+
+.header {
+  background-color: #222831;
   padding: 20px;
 }
 
-.editor-header
-{
+.editor-header {
   display: flex;
   justify-content: space-between;
 }
 
-.editor-header p
-{
+.editor-header p {
   margin: 0;
 }
 
-.input-p,.output-p
-{
-  margin: 2.5px 0px 2.5px 0px;
+.input-p, .output-p {
+  margin: 2.5px 0;
 }
 
-.editor-header-comps input
-{
+.editor-header-comps input {
   margin: 0;
   padding: 0;
 }
 
-.editor-header-comps
-{
+.editor-header-comps {
   display: flex;
   gap: 20px;
 }
 
-.runcode
-{
+.runcode {
   padding: 5px 20px;
   border: none;
   border-radius: 7px;
@@ -127,4 +130,38 @@
   color: #222831;
   font-weight: 700;
   cursor: pointer;
+}
+
+.language {
+  width: 131px;
+  height: 26px;
+  border: none;
+  border-radius: 7px;
+}
+
+input:focus, textarea:focus,select:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+.input-contents, .output-contents {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+textarea {
+  flex: 1;
+  resize: none; 
+  overflow: auto; 
+  border: none;
+  background-color: #393E46;
+}
+
+.input textarea {
+  height: 100%;
+}
+
+.output textarea {
+  height: 100%;
 }
