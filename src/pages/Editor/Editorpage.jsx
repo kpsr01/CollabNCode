@@ -20,7 +20,7 @@ function Editorpage() {
 
   const [language, setlanguage] = useState('c');
   const [input, setinput] = useState('');
-  const [output, setoutput] = useState('');
+  const [output, setoutput] = useState('Click "Run Code" to run the code');
   const [code, setcode] = useState(`// Default C code
 #include <stdio.h>
 
@@ -81,7 +81,11 @@ print("Hello, World!")`);
 console.log("Hello, World!");`);
     }
     setinput('');
+<<<<<<< HEAD
     setoutput('')
+=======
+    setoutput('Click "Run Code" to run the code')
+>>>>>>> ecf0fa60a568fcd3e7fd35927ecd9eb86a706047
   };
 
   const statusMessages = {
