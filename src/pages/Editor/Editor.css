@@ -7,8 +7,14 @@ body {
   height: 100vh;
 }
 
-.logo {
+.logo *{
   text-align: center;
+  margin: 0;
+}
+
+.logo
+{
+  margin-top: 7px;
 }
 
 .sidebar {
@@ -176,4 +182,9 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+textarea::placeholder
+{
+  color: #BBBBBB;
 }

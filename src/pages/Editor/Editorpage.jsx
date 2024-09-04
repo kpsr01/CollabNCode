@@ -80,23 +80,49 @@ print("Hello, World!")`);
       setcode(`// Default JavaScript code
 console.log("Hello, World!");`);
     }
+    setinput('');
+    setoutput('')
   };
 
+  const statusMessages = {
+    1: "In Queue",
+    2: "Processing",
+    3: "Accepted",
+    4: "Wrong Answer",
+    5: "Time Limit Exceeded",
+    6: "Compilation Error",
+    7: "Runtime Error (SIGSEGV)",
+    8: "Runtime Error (SIGXFSZ)",
+    9: "Runtime Error (SIGFPE)",
+    10: "Runtime Error (SIGABRT)",
+    11: "Runtime Error (NZEC)",
+    12: "Runtime Error (Other)",
+    13: "Internal Error",
+    14: "Exec Format Error"
+  };
+  
   const callback = ({ apistatus, data, message }) => {
     if (apistatus === 'loading') {
       setshowloader(true);
     } else if (apistatus === 'error') {
       setshowloader(false);
-      setoutput('Something went wrong, try again!');
-    } else {
+      setoutput(`Error: ${message}`);
+    } else if (apistatus === 'success') {
       setshowloader(false);
+  
+      const statusMessage = statusMessages[data.status.id] || "Unknown Status";
+  
       if (data.status.id === 3) {
-        setoutput(atob(data.stdout));
+        const decodedOutput = data.stdout ? atob(data.stdout) : 'No output produced';
+        setoutput(decodedOutput);
       } else {
-        setoutput(atob(data.stderr));
+        const decodedError = data.stderr ? atob(data.stderr) : statusMessage;
+        setoutput(`${statusMessage}: ${decodedError}`);
       }
     }
   };
+  
+  
 
   const runcode = useCallback(() => {
     makesubmission({
@@ -112,6 +138,7 @@ console.log("Hello, World!");`);
       <div className="sidebar">
         <div className="sidebarcontents">
           <div className="logo">
+            <h1>&lt;/&gt;</h1>
             <h2>Collab N Code</h2>
             <hr />
           </div>
@@ -163,7 +190,7 @@ console.log("Hello, World!");`);
               <p className='input-p'>Input</p>
             </div>
             <div className="input-contents">
-              <textarea value={input} onChange={(e) => setinput(e.target.value)}></textarea>
+              <textarea value={input} placeholder="Enter all necessary inputs seperated by a ' '" onChange={(e) => setinput(e.target.value)}></textarea>
             </div>
           </div>
           <div className="output">
@@ -171,7 +198,7 @@ console.log("Hello, World!");`);
               <p className='output-p'>Output</p>
             </div>
             <div className="output-contents">
-              <textarea readOnly value={output} onChange={(e) => setoutput(e.target.value)}></textarea>
+              <textarea readOnly value={output} placeholder='Click "Run Code" to run the code' onChange={(e) => setoutput(e.target.value)}></textarea>
             </div>
           </div>
         </div>

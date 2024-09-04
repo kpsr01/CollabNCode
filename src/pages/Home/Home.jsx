@@ -52,7 +52,10 @@ function Home() {
         key={vertical + horizontal}
       />
       <div className="homediv">
-        <h2>Collab N Code</h2>
+        <div className="logo-home">
+          <h1>&lt;/&gt;</h1>
+          <h2>Collab N Code</h2>
+        </div>
         <h4>Join Room</h4>
         <div className="inputs">
           <input type="text" placeholder='USERNAME' value={username} onChange={(e)=>setusername(e.target.value)}/>
