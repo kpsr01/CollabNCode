@@ -20,7 +20,7 @@ function Editorpage() {
 
   const [language, setlanguage] = useState('c');
   const [input, setinput] = useState('');
-  const [output, setoutput] = useState('');
+  const [output, setoutput] = useState('Click "Run Code" to run the code');
   const [code, setcode] = useState(`// Default C code
 #include <stdio.h>
 
@@ -80,6 +80,8 @@ print("Hello, World!")`);
       setcode(`// Default JavaScript code
 console.log("Hello, World!");`);
     }
+    setinput('');
+    setoutput('Click "Run Code" to run the code')
   };
 
   const callback = ({ apistatus, data, message }) => {
