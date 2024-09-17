@@ -1,18 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import './Editor.css';
-import Connected from '../../components/Connected';
 import { Editor } from '@monaco-editor/react';
 import { BounceLoader } from 'react-spinners';
 import { makesubmission } from './coderunner';
 
 function Editorpage() {
-  const [connectedlist, setconnectedlist] = useState([
-    { userID: 1, userName: 'iStyle' },
-    { userID: 2, userName: 'iPavan' },
-    { userID: 3, userName: 'iBro' },
-    { userID: 4, userName: 'iPawn' },
-  ]);
-
+  
   const editoroptions = {
     fontSize: 18,
     wordWrap: 'on',
@@ -146,9 +139,7 @@ console.log("Hello, World!");`);
           <h4>Connected</h4>
           <div className="sidebarcomps">
             <div className="connectedlist">
-              {connectedlist.map((user) => (
-                <Connected key={user.userID} userName={user.userName} userID={user.userID} />
-              ))}
+              
             </div>
             <div className="btns">
               <button className='copy'>Room ID: ABCDEFG</button>
