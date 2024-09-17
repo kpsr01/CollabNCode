@@ -191,7 +191,7 @@ console.log("Hello, World!");`);
               <p className='input-p'>Input</p>
             </div>
             <div className="input-contents">
-              <textarea value={input} placeholder="Enter all necessary inputs seperated by a ' '" onChange={(e) => setinput(e.target.value)}></textarea>
+              <textarea value={input} placeholder='Enter all necessary inputs seperated by a " "' onChange={(e) => setinput(e.target.value)}></textarea>
             </div>
           </div>
           <div className="output">

@@ -1,30 +1,26 @@
 import { useState, React } from 'react'
 import './Home.css'
-import Snackbar from '@mui/material/Snackbar';
+import  {toast,Toaster} from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
 
 function Home() {
+  const navigate = useNavigate();
   const [roomid,setroomid]=useState('');
   const [username,setusername]=useState('');
-  const [state, setState] =useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
-  });
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
+
+  const joinRoom = () => {
+    if (!roomid || !username) {
+      toast.error('ROOM ID & Username is required');
+        return;
     }
 
-    setState((prevState) => ({
-      ...prevState,
-      open: false,
-    }));
-  };
-  const { vertical, horizontal, open } = state;
-
-  const handleClick = (newState) => {
-    setState({ ...newState, open: true });
-  };
+    navigate(`/editor/${roomid}`, {
+        state: {
+            username,
+        },
+    });
+};
 
   
   const makeid=(e)=> {
@@ -38,18 +34,20 @@ function Home() {
       counter += 1;
     }
     setroomid(result);
-    handleClick({ vertical: 'top', horizontal: 'center' })
+    toast.success('New room created successfully!');
 }
 
   return (
     <div className='homepage'>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        message="New room created successfully!"
-        autoHideDuration={3000}
-        onClose={handleClose}
-        key={vertical + horizontal}
+      <Toaster
+      toastOptions={{
+        className: '',
+        style: {
+          color: '#EEEEEE',
+          backgroundColor: '#222831',
+          boxShadow: '0px 0px 30px #040D12',
+        },
+      }}
       />
       <div className="homediv">
         <div className="logo-home">
@@ -62,7 +60,7 @@ function Home() {
           <input type="text" placeholder='ROOM ID' value={roomid} onChange={(e)=>setroomid(e.target.value)} />
         </div>
         <div className="btn">
-          <button>Join</button>
+          <button onClick={joinRoom}>Join</button>
         </div>
         <p>Don't have Room ID?<span className='link'><a href="" onClick={makeid}><b>Create Room</b></a></span></p>
       </div>
