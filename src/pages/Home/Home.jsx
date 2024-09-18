@@ -10,9 +10,19 @@ function Home() {
   const [username,setusername]=useState('');
 
   const joinRoom = () => {
-    if (!roomid || !username) {
-      toast.error('ROOM ID & Username is required');
+    if (!roomid && !username) {
+      toast.error('Enter Room ID & Username');
         return;
+    }
+    else if(!roomid)
+    {
+      toast.error('Enter Room ID');
+      return;
+    }
+    else if(!username)
+    {
+      toast.error('Enter Username');
+      return;
     }
 
     navigate(`/editor/${roomid}`, {
