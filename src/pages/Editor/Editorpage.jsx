@@ -3,28 +3,50 @@ import './Editor.css';
 import { Editor } from '@monaco-editor/react';
 import { BounceLoader } from 'react-spinners';
 import { makesubmission } from './coderunner';
-import { initsocket } from '../../socket';
-import { useLocation } from 'react-router-dom';
-import ACTIONS from '../../actions';
+import io from 'socket.io-client';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+
 
 
 function Editorpage() {
+  const location = useLocation();
+  const navigate=useNavigate();
+  const { roomId, username } = location.state;  
+  const socketRef = useRef(null);
+  useEffect(() => {
+  socketRef.current = io('http://localhost:4000');  
+  
 
-  const socketref=useRef(null);
-  const location=useLocation();
+  socketRef.current.emit('joinRoom', { roomId, username });
 
-  useEffect(()=>
-  {
-    const init = async () =>
-    {
-      socketref.current=await initsocket();
-      // socketref.current.emit(ACTIONS.JOIN,{
-      //   roomid,
-      //   username: location.state?.username,
-      // });
-    };
-    init();
-  },[]);
+  socketRef.current.on('codeUpdate', (newCode) => {
+    setcode(newCode);
+  });
+
+  socketRef.current.on('inputUpdate', (newInput) => {
+    setinput(newInput);
+  });
+
+  socketRef.current.on('outputUpdate', (newOutput) => {
+    setoutput(newOutput);
+  });
+
+  socketRef.current.on('userJoined', ({ username }) => {
+    console.log(`${username} joined the room`);
+  });
+
+  socketRef.current.on('userLeft', ({ username }) => {
+    console.log(`${username} left the room`);
+  });
+
+  return () => {
+    socketRef.current.emit('leaveRoom', { roomId });
+    socketRef.current.disconnect();
+  };
+}, [roomId, username]);
+
+
   
   const editoroptions = {
     fontSize: 18,
@@ -50,7 +72,9 @@ int main() {
 
   const handleEditorChange = (value) => {
     setcode(value);
+    socketRef.current.emit('codeChange', { roomId, code: value });
   };
+  
 
   const handleEditorDidMount = (editor) => {
     editorRef.current = editor;
@@ -121,6 +145,7 @@ console.log("Hello, World!");`);
     } else if (apistatus === 'error') {
       setshowloader(false);
       setoutput(`Error: ${message}`);
+      socketRef.current.emit('outputChange', { roomId, output: `Error: ${message}` });  
     } else if (apistatus === 'success') {
       setshowloader(false);
   
@@ -129,15 +154,28 @@ console.log("Hello, World!");`);
       if (data.status.id === 3) {
         const decodedOutput = data.stdout ? atob(data.stdout) : 'No output produced';
         setoutput(decodedOutput);
+        socketRef.current.emit('outputChange', { roomId, output: decodedOutput });  
       } else {
         const decodedError = data.stderr ? atob(data.stderr) : statusMessage;
         setoutput(`${statusMessage}: ${decodedError}`);
+        socketRef.current.emit('outputChange', { roomId, output: `${statusMessage}: ${decodedError}` }); 
       }
     }
   };
   
+
+  const handleInputChange = (e) => {
+    const newInput = e.target.value;
+    setinput(newInput);
+    socketRef.current.emit('inputChange', { roomId, input: newInput });  
+  };
   
 
+  const handleOutputChange = (newOutput) => {
+    setoutput(newOutput);
+    socketRef.current.emit('outputChange', { roomId, output: newOutput });  
+  };
+  
   const runcode = useCallback(() => {
     makesubmission({
       code: code,
@@ -146,6 +184,19 @@ console.log("Hello, World!");`);
       callback,
     });
   }, [code, language, input]);
+
+  const handleLeaveRoom = () => {
+    socketRef.current.emit('leaveRoom', { roomId });
+  
+    socketRef.current.off('inputChange');
+    socketRef.current.off('outputChange');
+    socketRef.current.off('editorChange');
+  
+    socketRef.current.disconnect();
+  
+    navigate('/')
+  };
+  
 
   return (
     <div className='editorpage'>
@@ -163,7 +214,10 @@ console.log("Hello, World!");`);
             </div>
             <div className="btns">
               <button className='copy'>Room ID: ABCDEFG</button>
-              <button className='leave'>Leave Room</button>
+              <button className='leave' onClick={handleLeaveRoom}>
+  Leave Room
+</button>
+
             </div>
           </div>
         </div>
@@ -202,7 +256,7 @@ console.log("Hello, World!");`);
               <p className='input-p'>Input</p>
             </div>
             <div className="input-contents">
-              <textarea value={input} placeholder='Enter all necessary inputs seperated by a " "' onChange={(e) => setinput(e.target.value)}></textarea>
+              <textarea value={input} placeholder='Enter all necessary inputs seperated by a " "' onChange={handleInputChange}></textarea>
             </div>
           </div>
           <div className="output">
@@ -210,7 +264,7 @@ console.log("Hello, World!");`);
               <p className='output-p'>Output</p>
             </div>
             <div className="output-contents">
-              <textarea readOnly value={output} placeholder='Click "Run Code" to run the code' onChange={(e) => setoutput(e.target.value)}></textarea>
+              <textarea readOnly value={output} placeholder='Click "Run Code" to run the code' onChange={handleOutputChange}></textarea>
             </div>
           </div>
         </div>

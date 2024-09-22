@@ -26,10 +26,12 @@ function Home() {
     }
 
     navigate(`/editor/${roomid}`, {
-        state: {
-            username,
-        },
+      state: {
+        roomId: roomid,
+        username: username,
+      },
     });
+    
 };
 
   
