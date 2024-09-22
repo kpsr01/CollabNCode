@@ -3,8 +3,28 @@ import './Editor.css';
 import { Editor } from '@monaco-editor/react';
 import { BounceLoader } from 'react-spinners';
 import { makesubmission } from './coderunner';
+import { initsocket } from '../../socket';
+import { useLocation } from 'react-router-dom';
+import ACTIONS from '../../actions';
+
 
 function Editorpage() {
+
+  const socketref=useRef(null);
+  const location=useLocation();
+
+  useEffect(()=>
+  {
+    const init = async () =>
+    {
+      socketref.current=await initsocket();
+      // socketref.current.emit(ACTIONS.JOIN,{
+      //   roomid,
+      //   username: location.state?.username,
+      // });
+    };
+    init();
+  },[]);
   
   const editoroptions = {
     fontSize: 18,
