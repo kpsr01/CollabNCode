@@ -1,71 +1,52 @@
-# Getting Started with Create React App
+# CollabnCode 💻
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**CollabnCode** is a collaborative coding web application that enables multiple users to work on code in real-time. Built with React, Monaco Editor, and Judge0 API, it provides a seamless coding experience for users, allowing them to edit and evaluate code simultaneously. The application utilizes Socket.IO and Express.js for efficient multi-user collaboration, making it easy to share and execute code live.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Real-time Collaboration**: Work with others on the same codebase simultaneously.
+- **Code Editing**: Leverage the powerful Monaco Editor for an enhanced coding experience.
+- **Code Evaluation**: Use the Judge0 API to evaluate and run code snippets in various programming languages.
+- **Live Code Sharing**: Easily share your code with collaborators through unique room IDs.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**:
+  - React
+  - Monaco Editor for code editing
+  - CSS for styling
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Backend**:
+  - Node.js
+  - Express.js for server-side logic
+  - Socket.IO for real-time communication
+  - Judge0 API for code execution
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+- Node.js installed on your machine.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# CollabNCode" 
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/collabncode.git
+   cd collabncode
+2. Install dependencies:
+   ```bash
+   npm install
+3. Start the application:
+   ```bash
+   npm start
+  - This command will start the React development server, and you can access the application at http://localhost:3000.
+4. Start the server:
+    ```bash
+    npm run server
+ - This command will start the backend development server at http://localhost:3000.
+5. Usage
+ - Open your web browser and go to http://localhost:3000.
+- Create or join a collaborative coding session by entering a unique room ID.
+- Start coding together with your teammates in real-time!
+- Use the provided functionality to run and evaluate your code.
