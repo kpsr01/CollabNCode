@@ -5,6 +5,7 @@ import { BounceLoader } from 'react-spinners';
 import { makesubmission } from './coderunner';
 import io from 'socket.io-client';
 import { useNavigate, useLocation } from 'react-router-dom';
+import  {toast,Toaster} from 'react-hot-toast';
 
 
 
@@ -200,6 +201,16 @@ console.log("Hello, World!");`);
 
   return (
     <div className='editorpage'>
+      <Toaster
+      toastOptions={{
+        className: '',
+        style: {
+          color: '#EEEEEE',
+          backgroundColor: '#222831',
+          boxShadow: '0px 0px 30px #040D12',
+        },
+      }}
+      />
       <div className="sidebar">
         <div className="sidebarcontents">
           <div className="logo">
@@ -213,7 +224,13 @@ console.log("Hello, World!");`);
               
             </div>
             <div className="btns">
-              <button className='copy'>Room ID: ABCDEFG</button>
+            <button className='copy' onClick={() => {
+  navigator.clipboard.writeText(roomId)
+    .then(() => toast.success('ROOM ID copied to clipboard!'))
+    .catch(err => console.error('Failed to copy: ', err));
+}}>
+  Room ID: {roomId}
+</button>
               <button className='leave' onClick={handleLeaveRoom}>
   Leave Room
 </button>
