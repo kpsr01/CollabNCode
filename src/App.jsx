@@ -14,7 +14,7 @@ function CollabNCode() {
           <Route path='/editor/:roomid' element={<Editorpage />}></Route>
         </Routes>
       </BrowserRouter>
-      <Analytics mode={'production'} />;
+      <Analytics mode={'production'} />
     </>
   )
 }

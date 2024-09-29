@@ -315,7 +315,7 @@ console.log("Hello, World!");`);
           />
         </div>
       </div>}
-      <Analytics mode={'production'} />;
+      <Analytics mode={'production'} />
     </div>
   );
 }
