@@ -227,7 +227,6 @@ console.log("Hello, World!");`);
         },
       }}
       />
-      <Analytics/>
       <div className="sidebar">
         <div className="sidebarcontents">
           <div className="logo">
@@ -316,6 +315,7 @@ console.log("Hello, World!");`);
           />
         </div>
       </div>}
+      <Analytics mode={'production'} />;
     </div>
   );
 }

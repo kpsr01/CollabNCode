@@ -7,7 +7,6 @@ import { Analytics } from "@vercel/analytics/react"
 function CollabNCode() {
   return (
     <>
-    <Analytics/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />}></Route>
@@ -15,6 +14,7 @@ function CollabNCode() {
           <Route path='/editor/:roomid' element={<Editorpage />}></Route>
         </Routes>
       </BrowserRouter>
+      <Analytics mode={'production'} />;
     </>
   )
 }
