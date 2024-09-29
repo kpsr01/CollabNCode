@@ -25,6 +25,11 @@ function Editorpage() {
     setcode(newCode);
   });
 
+  socketRef.current.on('languageUpdate', (newLanguage) => {
+    setlanguage(newLanguage);  
+    changecode(newLanguage);   
+  });
+
   socketRef.current.on('inputUpdate', (newInput) => {
     setinput(newInput);
   });
@@ -84,6 +89,7 @@ int main() {
   const onlangchange = (e) => {
     const lang = e.target.value;
     setlanguage(lang);
+    socketRef.current.emit('languageChange', { roomId, language: lang });
   };
 
   const changecode = (lang) => {
