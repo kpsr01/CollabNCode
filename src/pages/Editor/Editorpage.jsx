@@ -48,7 +48,7 @@ function Editorpage() {
       setConnectedUsers((prevUsers) => prevUsers.filter(user => user !== username));
     });
 
-    socket.on('syncState', ({ code, language, input, output }) => {
+    socketRef.current.on('syncState', ({ code, language, input, output }) => {
       setcode(code); 
       setlanguage(language); 
       setinput(input); 
