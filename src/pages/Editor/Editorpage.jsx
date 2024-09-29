@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import { useNavigate, useLocation } from 'react-router-dom';
 import  {toast,Toaster} from 'react-hot-toast';
 import Avatar from 'react-avatar';
+import { Analytics } from "@vercel/analytics/react"
 
 
 
@@ -226,6 +227,7 @@ console.log("Hello, World!");`);
         },
       }}
       />
+      <Analytics/>
       <div className="sidebar">
         <div className="sidebarcontents">
           <div className="logo">
