@@ -27,7 +27,7 @@ body {
 .connectedlist {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 50px;
   flex-wrap: wrap;
   margin-top: 20px;
 }
@@ -187,4 +187,12 @@ textarea {
 textarea::placeholder
 {
   color: #BBBBBB;
+}
+
+.user
+{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex-wrap: wrap;
 }

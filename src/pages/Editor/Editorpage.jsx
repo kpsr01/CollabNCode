@@ -6,6 +6,7 @@ import { makesubmission } from './coderunner';
 import io from 'socket.io-client';
 import { useNavigate, useLocation } from 'react-router-dom';
 import  {toast,Toaster} from 'react-hot-toast';
+import Avatar from 'react-avatar';
 
 
 
@@ -15,6 +16,8 @@ function Editorpage() {
   const navigate=useNavigate();
   const { roomId, username } = location.state;  
   const socketRef = useRef(null);
+  const [connectedUsers, setConnectedUsers] = useState([]);
+
   useEffect(() => {
   socketRef.current = io('https://backendforcnc.onrender.com/');  
   
@@ -40,10 +43,16 @@ function Editorpage() {
 
   socketRef.current.on('userJoined', ({ username }) => {
     console.log(`${username} joined the room`);
+    setConnectedUsers((prevUsers) => [...prevUsers, username]); 
   });
 
   socketRef.current.on('userLeft', ({ username }) => {
     console.log(`${username} left the room`);
+    setConnectedUsers((prevUsers) => prevUsers.filter(user => user !== username)); 
+  });
+
+  socketRef.current.on('roomUsers', (users) => {
+    setConnectedUsers(users.map(user => user.username)); 
   });
 
   return () => {
@@ -226,8 +235,13 @@ console.log("Hello, World!");`);
           </div>
           <h4>Connected</h4>
           <div className="sidebarcomps">
-            <div className="connectedlist">
-              
+          <div className="connectedlist">
+              {connectedUsers.map((user, index) => (
+                <div key={index} className="user">
+                  <Avatar name={user} size="55" round="10px"/>
+                  <span>{user}</span>
+                </div>
+              ))}
             </div>
             <div className="btns">
             <button className='copy' onClick={() => {
