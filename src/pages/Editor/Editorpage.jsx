@@ -16,7 +16,7 @@ function Editorpage() {
   const { roomId, username } = location.state;  
   const socketRef = useRef(null);
   useEffect(() => {
-  socketRef.current = io('https://e928770b-dd6f-4da5-849d-58e04aa29876-00-16xz403kwd7ov.sisko.replit.dev/');  
+  socketRef.current = io('https://backendforcnc.onrender.com/');  
   
 
   socketRef.current.emit('joinRoom', { roomId, username });
