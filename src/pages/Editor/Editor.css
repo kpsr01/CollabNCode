@@ -26,8 +26,8 @@ body {
 
 .connectedlist {
   display: flex;
-  align-items: center;
-  gap: 50px;
+  justify-content: space-around;
+  gap: 20px;
   flex-wrap: wrap;
   margin-top: 20px;
 }
