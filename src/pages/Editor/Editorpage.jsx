@@ -48,12 +48,13 @@ function Editorpage() {
       setConnectedUsers((prevUsers) => prevUsers.filter(user => user !== username));
     });
 
-    socketRef.current.on('syncState', (state) => {
-      setcode(state.code);
-      setlanguage(state.language);
-      setinput(state.input);
-      setoutput(state.output);
+    socket.on('syncState', ({ code, language, input, output }) => {
+      setcode(code); 
+      setlanguage(language); 
+      setinput(input); 
+      setoutput(output); 
     });
+    
 
     socketRef.current.on('roomUsers', (users) => setConnectedUsers(users.map(user => user.username)));
 
