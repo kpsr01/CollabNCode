@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react"
 function CollabNCode() {
   return (
     <>
+    <Analytics/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />}></Route>
