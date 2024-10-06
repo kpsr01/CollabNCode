@@ -20,47 +20,53 @@ function Editorpage() {
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
-  socketRef.current = io('https://backendforcnc.onrender.com/');  
+    socketRef.current = io('http://localhost:4000');  
   
+    socketRef.current.emit('joinRoom', { roomId, username });
 
-  socketRef.current.emit('joinRoom', { roomId, username });
+    socketRef.current.on('codeUpdate', (newCode) => {
+      setcode(newCode);
+    });
 
-  socketRef.current.on('codeUpdate', (newCode) => {
-    setcode(newCode);
-  });
+    socketRef.current.on('languageUpdate', (newLanguage) => {
+      setlanguage(newLanguage);  
+      changecode(newLanguage);   
+    });
 
-  socketRef.current.on('languageUpdate', (newLanguage) => {
-    setlanguage(newLanguage);  
-    changecode(newLanguage);   
-  });
+    socketRef.current.on('inputUpdate', (newInput) => {
+      setinput(newInput);
+    });
 
-  socketRef.current.on('inputUpdate', (newInput) => {
-    setinput(newInput);
-  });
+    socketRef.current.on('outputUpdate', (newOutput) => {
+      setoutput(newOutput);
+    });
 
-  socketRef.current.on('outputUpdate', (newOutput) => {
-    setoutput(newOutput);
-  });
+    socketRef.current.on('userJoined', ({ username }) => {
+      console.log(`${username} joined the room`);
+      setConnectedUsers((prevUsers) => [...prevUsers, username]); 
+    });
 
-  socketRef.current.on('userJoined', ({ username }) => {
-    console.log(`${username} joined the room`);
-    setConnectedUsers((prevUsers) => [...prevUsers, username]); 
-  });
+    socketRef.current.on('userLeft', ({ username }) => {
+      console.log(`${username} left the room`);
+      setConnectedUsers((prevUsers) => prevUsers.filter(user => user !== username)); 
+    });
 
-  socketRef.current.on('userLeft', ({ username }) => {
-    console.log(`${username} left the room`);
-    setConnectedUsers((prevUsers) => prevUsers.filter(user => user !== username)); 
-  });
+    socketRef.current.on('roomUsers', (users) => {
+      setConnectedUsers(users.map(user => user.username)); 
+    });
 
-  socketRef.current.on('roomUsers', (users) => {
-    setConnectedUsers(users.map(user => user.username)); 
-  });
+    socketRef.current.on('roomState', ({ code, language, input, output }) => {
+      setcode(code);
+      setlanguage(language);
+      setinput(input);
+      setoutput(output);
+    });
 
-  return () => {
-    socketRef.current.emit('leaveRoom', { roomId });
-    socketRef.current.disconnect();
-  };
-}, [roomId, username]);
+    return () => {
+      socketRef.current.emit('leaveRoom', { roomId });
+      socketRef.current.disconnect();
+    };
+  }, [roomId, username]);
 
 
   

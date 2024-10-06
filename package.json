@@ -36,7 +36,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server:dev": "nodemon server.js",
+    "server:dev": "nodemon ../backend/server.js",
     "server:prod": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
