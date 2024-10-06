@@ -20,7 +20,7 @@ function Editorpage() {
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
-    socketRef.current = io('http://localhost:4000');  
+    socketRef.current = io('https://backendforcnc.onrender.com/');  
   
     socketRef.current.emit('joinRoom', { roomId, username });
 
