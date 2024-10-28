@@ -20,53 +20,33 @@ function Editorpage() {
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
-    socketRef.current = io('https://backendforcnc.onrender.com/');  
-  
-    socketRef.current.emit('joinRoom', { roomId, username });
-
-    socketRef.current.on('codeUpdate', (newCode) => {
-      setcode(newCode);
-    });
-
-    socketRef.current.on('languageUpdate', (newLanguage) => {
-      setlanguage(newLanguage);  
-      changecode(newLanguage);   
-    });
-
-    socketRef.current.on('inputUpdate', (newInput) => {
-      setinput(newInput);
-    });
-
-    socketRef.current.on('outputUpdate', (newOutput) => {
-      setoutput(newOutput);
-    });
-
-    socketRef.current.on('userJoined', ({ username }) => {
-      console.log(`${username} joined the room`);
-      setConnectedUsers((prevUsers) => [...prevUsers, username]); 
-    });
-
-    socketRef.current.on('userLeft', ({ username }) => {
-      console.log(`${username} left the room`);
-      setConnectedUsers((prevUsers) => prevUsers.filter(user => user !== username)); 
-    });
-
-    socketRef.current.on('roomUsers', (users) => {
-      setConnectedUsers(users.map(user => user.username)); 
-    });
-
-    socketRef.current.on('roomState', ({ code, language, input, output }) => {
+    socketRef.current = io('https://backendforcnc.onrender.com');
+      socketRef.current.emit('joinRoom', { roomId, username });
+      socketRef.current.emit('getRoomState', { roomId });
+      socketRef.current.on('roomState', ({ code, language, input, output }) => {
       setcode(code);
       setlanguage(language);
       setinput(input);
       setoutput(output);
     });
-
+  
+    socketRef.current.on('codeUpdate', (newCode) => setcode(newCode));
+    socketRef.current.on('languageUpdate', ({ language: newLang, code: newCode }) => {
+      setlanguage(newLang);
+      setcode(newCode);  
+    });
+    socketRef.current.on('roomUsers', (users) => {
+      setConnectedUsers(users.map(user => user.username));
+    });
+    socketRef.current.on('inputUpdate', (newInput) => setinput(newInput));
+    socketRef.current.on('outputUpdate', (newOutput) => setoutput(newOutput));
+  
     return () => {
       socketRef.current.emit('leaveRoom', { roomId });
       socketRef.current.disconnect();
     };
   }, [roomId, username]);
+  
 
 
   
@@ -97,53 +77,49 @@ int main() {
     socketRef.current.emit('codeChange', { roomId, code: value });
   };
   
+  const onlangchange = (e) => {
+    const newLang = e.target.value;
+    setlanguage(newLang);
+    changecode(newLang);
+    socketRef.current.emit('languageChange', { roomId, language: newLang });
+  };
+  
+
+  
 
   const handleEditorDidMount = (editor) => {
     editorRef.current = editor;
   };
 
-  const onlangchange = (e) => {
-    const lang = e.target.value;
-    setlanguage(lang);
-    socketRef.current.emit('languageChange', { roomId, language: lang });
-  };
+
+  
 
   const changecode = (lang) => {
-    if (lang === 'c') {
-      setcode(`// Default C code
-#include <stdio.h>
-
-int main() {
-    printf("Hello, World!\\n");
-    return 0;
-}`);
-    } else if (lang === 'cpp') {
-      setcode(`// Default C++ code
-#include <iostream>
-using namespace std;
-
-int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
-}`);
-    } else if (lang === 'java') {
-      setcode(`// Default Java code
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
+    let defaultCode = '';
+    switch (lang) {
+      case 'c':
+        defaultCode = `// Default C code\n#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}`;
+        break;
+      case 'cpp':
+        defaultCode = `// Default C++ code\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, World!" << endl;\n    return 0;\n}`;
+        break;
+      case 'java':
+        defaultCode = `// Default Java code\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}`;
+        break;
+      case 'python':
+        defaultCode = `# Default Python code\nprint("Hello, World!")`;
+        break;
+      case 'javascript':
+        defaultCode = `// Default JavaScript code\nconsole.log("Hello, World!");`;
+        break;
+      default:
+        defaultCode = '// Default code';
     }
-}`);
-    } else if (lang === 'python') {
-      setcode(`# Default Python code
-print("Hello, World!")`);
-    } else if (lang === 'javascript') {
-      setcode(`// Default JavaScript code
-console.log("Hello, World!");`);
-    }
+    setcode(defaultCode);
     setinput('');
     setoutput('');
-    
   };
+  
 
   const statusMessages = {
     1: "In Queue",
@@ -165,26 +141,22 @@ console.log("Hello, World!");`);
   const callback = ({ apistatus, data, message }) => {
     if (apistatus === 'loading') {
       setshowloader(true);
-    } else if (apistatus === 'error') {
+    } else {
       setshowloader(false);
-      setoutput(`Error: ${message}`);
-      socketRef.current.emit('outputChange', { roomId, output: `Error: ${message}` });  
-    } else if (apistatus === 'success') {
-      setshowloader(false);
+      const statusMessage = statusMessages[data?.status?.id] || "Unknown Status";
   
-      const statusMessage = statusMessages[data.status.id] || "Unknown Status";
-  
-      if (data.status.id === 3) {
+      if (data?.status?.id === 3) {
         const decodedOutput = data.stdout ? atob(data.stdout) : 'No output produced';
         setoutput(decodedOutput);
-        socketRef.current.emit('outputChange', { roomId, output: decodedOutput });  
+        socketRef.current.emit('outputChange', { roomId, output: decodedOutput });
       } else {
         const decodedError = data.stderr ? atob(data.stderr) : statusMessage;
         setoutput(`${statusMessage}: ${decodedError}`);
-        socketRef.current.emit('outputChange', { roomId, output: `${statusMessage}: ${decodedError}` }); 
+        socketRef.current.emit('outputChange', { roomId, output: `${statusMessage}: ${decodedError}` });
       }
     }
   };
+  
   
 
   const handleInputChange = (e) => {
