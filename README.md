@@ -1,4 +1,4 @@
-# CollabnCode 💻
+# CollabNCode 💻
 
 **CollabnCode** is a collaborative coding web application that enables multiple users to work on code in real-time. Built with React, Monaco Editor, and Judge0 API, it provides a seamless coding experience for users, allowing them to edit and evaluate code simultaneously. The application utilizes Socket.IO and Express.js for efficient multi-user collaboration, making it easy to share and execute code live.
 
